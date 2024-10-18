@@ -11,25 +11,22 @@ import java.util.Comparator;
 public class IPokedexTest {
 
     private IPokedex pokedex;
-    private Pokemon bulbasaur;
-    private Pokemon charmander;
+    private Pokemon bulbizarre;
+    private Pokemon aquali;
 
     @Before
     public void setUp() throws PokedexException {
         pokedex = mock(IPokedex.class);
 
-        // Mocking some Pokemon
-        bulbasaur = new Pokemon(1, "Bulbasaur", 126, 126, 90, 613, 64, 4000, 4, 56.0);
-        charmander = new Pokemon(4, "Charmander", 128, 108, 78, 500, 58, 3000, 4, 39.0);
+        bulbizarre = new Pokemon(0, "Bulbizarre", 126, 126, 90, 613, 64, 4000, 4, 56.0);
+        aquali = new Pokemon(133, "Aquali", 186, 168, 260, 2729, 202, 5000, 4, 100.0);
 
-        // Defining mock behavior
         when(pokedex.size()).thenReturn(2);
-        when(pokedex.addPokemon(bulbasaur)).thenReturn(0);
+        when(pokedex.addPokemon(bulbizarre)).thenReturn(0);
 
-        // Utilisation de doReturn pour éviter les exceptions non capturées
-        doReturn(bulbasaur).when(pokedex).getPokemon(1);
+        doReturn(bulbizarre).when(pokedex).getPokemon(0);
 
-        when(pokedex.getPokemons()).thenReturn(Arrays.asList(bulbasaur, charmander));
+        when(pokedex.getPokemons()).thenReturn(Arrays.asList(bulbizarre, aquali));
     }
 
     @Test
@@ -39,12 +36,12 @@ public class IPokedexTest {
 
     @Test
     public void testAddPokemon() {
-        assertEquals(0, pokedex.addPokemon(bulbasaur));
+        assertEquals(0, pokedex.addPokemon(bulbizarre));
     }
 
     @Test
     public void testGetPokemon() throws PokedexException {
-        assertEquals(bulbasaur, pokedex.getPokemon(1));
+        assertEquals(bulbizarre, pokedex.getPokemon(0));
     }
 
     @Test
@@ -52,34 +49,30 @@ public class IPokedexTest {
         List<Pokemon> pokemons = pokedex.getPokemons();
         assertNotNull(pokemons);
         assertEquals(2, pokemons.size());
-        assertEquals(bulbasaur, pokemons.get(0));
-        assertEquals(charmander, pokemons.get(1));
+        assertEquals(bulbizarre, pokemons.get(0));
+        assertEquals(aquali, pokemons.get(1));
     }
 
     @Test
     public void testGetPokemonsSorted() {
         Comparator<Pokemon> byName = Comparator.comparing(Pokemon::getName);
-        List<Pokemon> sortedPokemons = Arrays.asList(bulbasaur, charmander);
+        List<Pokemon> sortedPokemons = Arrays.asList(bulbizarre, aquali);
         when(pokedex.getPokemons(byName)).thenReturn(sortedPokemons);
 
         List<Pokemon> pokemons = pokedex.getPokemons(byName);
         assertNotNull(pokemons);
         assertEquals(2, pokemons.size());
-        assertEquals(bulbasaur, pokemons.get(0));  // Bulbasaur should come first in alphabetical order
+        assertEquals(bulbizarre, pokemons.get(0));
     }
 
-    // Corrected test to use assertThrows instead of @Test(expected = ...)
     @Test
     public void testGetPokemonInvalidId() throws PokedexException {
-        // Define behavior for an invalid ID
         when(pokedex.getPokemon(anyInt())).thenThrow(new PokedexException("Invalid ID"));
 
-        // Use assertThrows to capture the exception
         PokedexException exception = assertThrows(PokedexException.class, () -> {
             pokedex.getPokemon(999);  // Invalid ID, should throw exception
         });
 
-        // Check the exception message
         assertEquals("Invalid ID", exception.getMessage());
     }
 }
