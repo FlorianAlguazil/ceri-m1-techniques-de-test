@@ -1,26 +1,30 @@
 package fr.univavignon.pokedex.api;
 
-import junit.framework.TestCase;
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
-public class IPokemonMetadataProviderTest extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class IPokemonMetadataProviderTest {
 
     private IPokemonMetadataProvider provider;
     private PokemonMetadata metadata;
 
-    @BeforeEach
+    @Before
     public void setUp() throws PokedexException {
         provider = mock(IPokemonMetadataProvider.class);
         metadata = new PokemonMetadata(0, "Bulbizarre", 126, 126, 90);
+
         when(provider.getPokemonMetadata(0)).thenReturn(metadata);
+
+        when(provider.getPokemonMetadata(-1)).thenThrow(new PokedexException("Invalid index"));
+        when(provider.getPokemonMetadata(151)).thenThrow(new PokedexException("Invalid index"));
     }
 
     @Test
     public void testGetPokemonMetadataIndex() throws PokedexException {
-        //On test si l'index correspondent quand on renseigne le bon pokemon
+        // On test si l'index correspond quand on renseigne le bon pokemon
         PokemonMetadata result = provider.getPokemonMetadata(0);
         assertNotNull(result);
         assertEquals(0, result.getIndex());
@@ -28,7 +32,7 @@ public class IPokemonMetadataProviderTest extends TestCase {
 
     @Test
     public void testGetPokemonMetadataName() throws PokedexException {
-        //On test si le nom correspondent quand on renseigne le bon pokemon
+        // On test si le nom correspond quand on renseigne le bon pokemon
         PokemonMetadata result = provider.getPokemonMetadata(0);
         assertNotNull(result);
         assertEquals("Bulbizarre", result.getName());
@@ -36,7 +40,7 @@ public class IPokemonMetadataProviderTest extends TestCase {
 
     @Test
     public void testGetPokemonMetadataAttack() throws PokedexException {
-        //On test si l'attaque correspondent quand on renseigne le bon pokemon
+        // On test si l'attaque correspond quand on renseigne le bon pokemon
         PokemonMetadata result = provider.getPokemonMetadata(0);
         assertNotNull(result);
         assertEquals(126, result.getAttack());
@@ -44,7 +48,7 @@ public class IPokemonMetadataProviderTest extends TestCase {
 
     @Test
     public void testGetPokemonMetadataDefense() throws PokedexException {
-        //On test si la defense correspondent quand on renseigne le bon pokemon
+        // On test si la défense correspond quand on renseigne le bon pokemon
         PokemonMetadata result = provider.getPokemonMetadata(0);
         assertNotNull(result);
         assertEquals(126, result.getDefense());
@@ -52,9 +56,21 @@ public class IPokemonMetadataProviderTest extends TestCase {
 
     @Test
     public void testGetPokemonMetadataStamina() throws PokedexException {
-        //On test si la stamina correspondent quand on renseigne le bon pokemon
+        // On test si la stamina correspond quand on renseigne le bon pokemon
         PokemonMetadata result = provider.getPokemonMetadata(0);
         assertNotNull(result);
         assertEquals(90, result.getStamina());
+    }
+
+    @Test(expected = PokedexException.class)
+    public void testGetPokemonMetadataInvalidIndexNegative() throws PokedexException {
+        // Test pour vérifier qu'une exception est levée pour un index négatif
+        provider.getPokemonMetadata(-1);
+    }
+
+    @Test(expected = PokedexException.class)
+    public void testGetPokemonMetadataInvalidIndexAbove() throws PokedexException {
+        // Test pour vérifier qu'une exception est levée pour un index supérieur à 150
+        provider.getPokemonMetadata(151);
     }
 }
