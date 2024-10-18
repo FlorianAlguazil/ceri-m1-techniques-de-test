@@ -13,6 +13,7 @@ public class IPokedexTest {
     private IPokedex pokedex;
     private Pokemon bulbizarre;
     private Pokemon aquali;
+    private Comparator<Pokemon> byName;
 
     @Before
     public void setUp() throws PokedexException {
@@ -27,6 +28,11 @@ public class IPokedexTest {
         doReturn(bulbizarre).when(pokedex).getPokemon(0);
 
         when(pokedex.getPokemons()).thenReturn(Arrays.asList(bulbizarre, aquali));
+
+        byName = Comparator.comparing(Pokemon::getName);
+        List<Pokemon> sortedPokemons = Arrays.asList(bulbizarre, aquali);
+        when(pokedex.getPokemons(byName)).thenReturn(sortedPokemons);
+
     }
 
     @Test
@@ -55,10 +61,6 @@ public class IPokedexTest {
 
     @Test
     public void testGetPokemonsSorted() {
-        Comparator<Pokemon> byName = Comparator.comparing(Pokemon::getName);
-        List<Pokemon> sortedPokemons = Arrays.asList(bulbizarre, aquali);
-        when(pokedex.getPokemons(byName)).thenReturn(sortedPokemons);
-
         List<Pokemon> pokemons = pokedex.getPokemons(byName);
         assertNotNull(pokemons);
         assertEquals(2, pokemons.size());
@@ -68,7 +70,6 @@ public class IPokedexTest {
     @Test
     public void testGetPokemonInvalidId() throws PokedexException {
         when(pokedex.getPokemon(anyInt())).thenThrow(new PokedexException("Invalid ID"));
-
         PokedexException exception = assertThrows(PokedexException.class, () -> {
             pokedex.getPokemon(999);  // Invalid ID, should throw exception
         });
