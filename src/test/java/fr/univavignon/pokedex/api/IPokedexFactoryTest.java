@@ -21,6 +21,8 @@ public class IPokedexFactoryTest {
         pokedexFactory = mock(IPokedexFactory.class);
         pokedex = mock(IPokedex.class);
 
+
+
         when(pokedexFactory.createPokedex(provider, pokemonFactory)).thenReturn(pokedex);
     }
 
