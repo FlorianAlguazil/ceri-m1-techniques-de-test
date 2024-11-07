@@ -1,8 +1,30 @@
 version: 2.1
 orbs:
-  codecov: codecov/codecov@4.0.1
-workflows:
-  upload-to-codecov:
-    jobs:
+  codecov: codecov/codecov@1.0.5
+
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    steps:
       - checkout
-      - codecov/upload
+      - run:
+          name: Install Maven dependencies
+          command: mvn install -DskipTests=true
+      - run:
+          name: Run unit tests with coverage
+          command: mvn test jacoco:report
+      - run:
+          name: Generate JaCoCo coverage report
+          command: mvn verify
+      - codecov/upload:
+          file: target/site/jacoco/jacoco.xml # Path to the coverage report
+
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master
