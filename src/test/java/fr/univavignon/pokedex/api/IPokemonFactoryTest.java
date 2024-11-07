@@ -49,4 +49,12 @@ public class IPokemonFactoryTest {
         assertNotNull(result);
         assertEquals(4, result.getCandy());
     }
+
+    @Test
+    public void testGetPokemonIv() {
+        // Test de la valeur de l'IV
+        Pokemon result = pokemonFactory.createPokemon(0, 613, 64, 4000, 4);
+        assertNotNull(result);
+        assertEquals(56.0, result.getIv(), 0.0);
+    }
 }
