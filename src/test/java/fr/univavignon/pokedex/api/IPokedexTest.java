@@ -13,10 +13,13 @@ public class IPokedexTest {
     private IPokedex pokedex;
     private Pokemon bulbizarre;
     private Pokemon aquali;
+    private Pokemon pikachu;
     private Comparator<Pokemon> byName;
 
     @Before
     public void setUp() throws PokedexException {
+        //avant implementation
+        /*
         pokedex = mock(IPokedex.class);
 
         bulbizarre = new Pokemon(0, "Bulbizarre", 126, 126, 90, 613, 64, 4000, 4, 56.0);
@@ -32,6 +35,24 @@ public class IPokedexTest {
         byName = Comparator.comparing(Pokemon::getName);
         List<Pokemon> sortedPokemons = Arrays.asList(bulbizarre, aquali);
         when(pokedex.getPokemons(byName)).thenReturn(sortedPokemons);
+         */
+
+        PokemonMetadataProvider metadataProvider = new PokemonMetadataProvider();
+        PokemonFactory pokemonFactory = new PokemonFactory();
+        pokedex = new Pokedex(metadataProvider, pokemonFactory);
+
+        // Créer quelques Pokémon pour les tests
+        bulbizarre = new Pokemon(0, "Bulbizarre", 126, 126, 90, 613, 64, 4000, 4, 56.0);
+        aquali = new Pokemon(133, "Aquali", 186, 168, 260, 2729, 202, 5000, 4, 100.0);
+        pikachu = new Pokemon(25, "Pikachu", 112, 90, 120, 3200, 150, 3500, 3, 35.0);
+
+
+        // Ajouter des Pokémon au Pokédex
+        pokedex.addPokemon(bulbizarre);
+        pokedex.addPokemon(aquali);
+
+        // Initialiser un comparateur pour trier les Pokémon par nom
+        byName = Comparator.comparing(Pokemon::getName);
 
     }
 
@@ -42,7 +63,8 @@ public class IPokedexTest {
 
     @Test
     public void testAddPokemon() {
-        assertEquals(0, pokedex.addPokemon(bulbizarre));
+        assertEquals(2, pokedex.addPokemon(pikachu));
+        assertEquals(3, pokedex.size());
     }
 
     @Test
@@ -64,16 +86,16 @@ public class IPokedexTest {
         List<Pokemon> pokemons = pokedex.getPokemons(byName);
         assertNotNull(pokemons);
         assertEquals(2, pokemons.size());
-        assertEquals(bulbizarre, pokemons.get(0));
+        assertEquals(aquali, pokemons.get(0));
     }
 
     @Test
-    public void testGetPokemonInvalidId() throws PokedexException {
-        when(pokedex.getPokemon(anyInt())).thenThrow(new PokedexException("Invalid ID"));
+    public void testGetPokemonInvalidId() {
         PokedexException exception = assertThrows(PokedexException.class, () -> {
-            pokedex.getPokemon(999);  // Invalid ID, should throw exception
+            pokedex.getPokemon(999);
         });
 
         assertEquals("Invalid ID", exception.getMessage());
     }
+
 }

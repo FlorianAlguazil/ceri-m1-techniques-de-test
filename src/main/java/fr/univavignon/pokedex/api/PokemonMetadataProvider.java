@@ -16,6 +16,8 @@ public class PokemonMetadataProvider implements IPokemonMetadataProvider {
         // Ajout de quelques exemples de Pokémon avec leur index et métadonnées.
         pokemonData.put(0, new PokemonMetadata(0, "Bulbizarre", 126, 126, 90));
         pokemonData.put(133, new PokemonMetadata(133, "Aquali", 186, 168, 260));
+        pokemonData.put(25, new PokemonMetadata(25, "Pikachu", 112, 90, 120));
+
     }
 
     @Override
