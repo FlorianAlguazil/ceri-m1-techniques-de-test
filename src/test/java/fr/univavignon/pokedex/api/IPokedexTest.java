@@ -46,7 +46,6 @@ public class IPokedexTest {
         aquali = new Pokemon(133, "Aquali", 186, 168, 260, 2729, 202, 5000, 4, 100.0);
         pikachu = new Pokemon(25, "Pikachu", 112, 90, 120, 3200, 150, 3500, 3, 35.0);
 
-
         // Ajouter des Pokémon au Pokédex
         pokedex.addPokemon(bulbizarre);
         pokedex.addPokemon(aquali);
@@ -97,5 +96,23 @@ public class IPokedexTest {
 
         assertEquals("Invalid ID", exception.getMessage());
     }
+
+    @Test
+    public void testCreatePokemon() {
+        // Appel de createPokemon pour créer un nouveau Pokémon
+        Pokemon newPokemon = pokedex.createPokemon(25, 150, 120, 2000, 3);
+
+        // Vérification que le Pokémon a été créé avec les bonnes valeurs
+        assertNotNull(newPokemon);
+        assertEquals(25, newPokemon.getIndex());  // Vérifie l'index
+        assertEquals(150, newPokemon.getCp());  // Vérifie le CP
+        assertEquals(120, newPokemon.getHp());  // Vérifie les HP
+        assertEquals(2000, newPokemon.getDust());  // Vérifie le nombre de poussière
+        assertEquals(3, newPokemon.getCandy());  // Vérifie le nombre de bonbons
+    }
+
+
+
+
 
 }
