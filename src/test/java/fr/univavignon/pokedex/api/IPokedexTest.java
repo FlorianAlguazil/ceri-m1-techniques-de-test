@@ -182,5 +182,32 @@ public class IPokedexTest {
         assertNotEquals(pokedex.hashCode(), anotherPokedex.hashCode());  // Les hashCode doivent être différents après l'ajout d'un Pokémon
     }
 
+    @Test
+    public void testEqualsWithSelf() {
+        // Tester que le Pokedex est égal à lui-même
+        assertEquals(pokedex, pokedex);  // Un objet est toujours égal à lui-même
+    }
+
+    @Test
+    public void testEqualsWithNull() {
+        // Tester que le Pokedex n'est pas égal à null
+        assertNotEquals(pokedex, null);  // null ne doit pas être égal au Pokedex
+    }
+
+
+    @Test
+    public void testEqualsWithDifferentClass() {
+        // Tester que le Pokedex n'est pas égal à un objet d'une classe différente
+        Object notPokedex = new Object();  // Créer un objet d'une classe différente
+        assertNotEquals(pokedex, notPokedex);  // Le Pokedex ne doit pas être égal à un objet d'une classe différente
+    }
+
+    @Test
+    public void testEqualsWithDifferentObjectType() {
+        // Comparer un Pokedex avec un objet d'un type complètement différent
+        Object notPokedex = new Object();  // Créer un objet d'une classe différente
+        assertNotEquals(pokedex, notPokedex);  // Le Pokedex ne doit pas être égal à un objet d'une classe différente
+    }
+
 
 }
