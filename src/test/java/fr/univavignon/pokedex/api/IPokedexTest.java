@@ -120,6 +120,27 @@ public class IPokedexTest {
         assertEquals("Bulbizarre", metadata.getName());  // Vérifie que le nom est correct pour l'index 0
     }
 
+    @Test
+    public void testGetPokemonInvalidIdNegative() {
+        // Tentative de récupérer un Pokémon avec un ID négatif
+        PokedexException exception = assertThrows(PokedexException.class, () -> {
+            pokedex.getPokemon(-1);
+        });
+
+        // Vérification que l'exception attendue a bien été lancée
+        assertEquals("Invalid ID", exception.getMessage());
+    }
+
+    @Test
+    public void testGetPokemonInvalidIdTooHigh() {
+        // Tentative de récupérer un Pokémon avec un ID trop grand (au-delà de la taille de la liste)
+        PokedexException exception = assertThrows(PokedexException.class, () -> {
+            pokedex.getPokemon(999);  // Supposons qu'il n'y ait pas 999 Pokémon
+        });
+
+        // Vérification que l'exception attendue a bien été lancée
+        assertEquals("Invalid ID", exception.getMessage());
+    }
 
 
 
