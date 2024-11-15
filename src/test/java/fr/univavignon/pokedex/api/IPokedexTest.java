@@ -142,6 +142,45 @@ public class IPokedexTest {
         assertEquals("Invalid ID", exception.getMessage());
     }
 
+    @Test
+    public void testEquals() {
+        // Créer une nouvelle instance de Pokedex avec le même contenu
+        PokemonMetadataProvider metadataProvider = new PokemonMetadataProvider();
+        PokemonFactory pokemonFactory = new PokemonFactory();
+        IPokedex anotherPokedex = new Pokedex(metadataProvider, pokemonFactory);
+
+        // Ajouter les mêmes Pokémon au second pokedex
+        anotherPokedex.addPokemon(bulbizarre);
+        anotherPokedex.addPokemon(aquali);
+
+        // Comparer les deux pokedex
+        assertEquals(pokedex, anotherPokedex);  // Les deux pokedex doivent être égaux
+
+        // Modifier un pokédex pour qu'il soit différent
+        anotherPokedex.addPokemon(pikachu);
+
+        assertNotEquals(pokedex, anotherPokedex);  // Ils ne doivent plus être égaux après l'ajout d'un Pokémon
+    }
+
+    @Test
+    public void testHashCode() {
+        // Créer une nouvelle instance de Pokedex avec le même contenu
+        PokemonMetadataProvider metadataProvider = new PokemonMetadataProvider();
+        PokemonFactory pokemonFactory = new PokemonFactory();
+        IPokedex anotherPokedex = new Pokedex(metadataProvider, pokemonFactory);
+
+        // Ajouter les mêmes Pokémon au second pokedex
+        anotherPokedex.addPokemon(bulbizarre);
+        anotherPokedex.addPokemon(aquali);
+
+        // Vérifier que les deux pokédex ont le même hashCode
+        assertEquals(pokedex.hashCode(), anotherPokedex.hashCode());  // Les hashCode doivent être égaux
+
+        // Modifier un pokédex pour qu'il soit différent
+        anotherPokedex.addPokemon(pikachu);
+
+        assertNotEquals(pokedex.hashCode(), anotherPokedex.hashCode());  // Les hashCode doivent être différents après l'ajout d'un Pokémon
+    }
 
 
 }
