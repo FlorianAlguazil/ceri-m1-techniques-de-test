@@ -111,6 +111,14 @@ public class IPokedexTest {
         assertEquals(3, newPokemon.getCandy());  // Vérifie le nombre de bonbons
     }
 
+    @Test
+    public void testGetPokemonMetadata() throws PokedexException {
+        PokemonMetadata metadata = pokedex.getPokemonMetadata(0);
+
+        // Vérification que les métadonnées sont correctement retournées
+        assertNotNull(metadata);
+        assertEquals("Bulbizarre", metadata.getName());  // Vérifie que le nom est correct pour l'index 0
+    }
 
 
 
