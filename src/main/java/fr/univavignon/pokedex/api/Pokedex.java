@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Concrete implementation of the IPokedex interface.
@@ -67,5 +68,20 @@ public class Pokedex implements IPokedex {
     @Override
     public Pokemon createPokemon(int index, int cp, int hp, int dust, int candy) {
         return pokemonFactory.createPokemon(index, cp, hp, dust, candy);
+    }
+
+    // Surcharge de equals pour comparer le contenu des pokémons
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pokedex pokedex = (Pokedex) o;
+        return Objects.equals(pokemons, pokedex.pokemons);  // Comparer les listes de pokémons
+    }
+
+    // Surcharge de hashCode
+    @Override
+    public int hashCode() {
+        return Objects.hash(pokemons);  // Utilise la liste des pokémons pour générer le hashCode
     }
 }
