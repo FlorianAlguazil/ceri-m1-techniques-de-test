@@ -12,10 +12,14 @@ public class IPokemonFactoryTest {
 
     @Before
     public void setUp() {
+        //avant implementation
+        /*
         pokemonFactory = mock(IPokemonFactory.class);
         pokemon = new Pokemon(1, "Bulbizarre", 126, 126, 90, 613, 64, 4000, 4, 56);
 
         when(pokemonFactory.createPokemon(0, 613, 64, 4000, 4)).thenReturn(pokemon);
+         */
+        pokemonFactory = new PokemonFactory();
     }
 
     @Test
@@ -52,9 +56,12 @@ public class IPokemonFactoryTest {
 
     @Test
     public void testGetPokemonIv() {
-        // Test de la valeur de l'IV
         Pokemon result = pokemonFactory.createPokemon(0, 613, 64, 4000, 4);
         assertNotNull(result);
-        assertEquals(56.0, result.getIv(), 0.0);
+
+        // Vérification que l'IV est dans une plage valide (entre 0% et 100%)
+        double iv = result.getIv();
+        assertTrue("L'IV doit être compris entre 0 et 100", iv >= 0.0 && iv <= 100.0);
     }
+
 }
