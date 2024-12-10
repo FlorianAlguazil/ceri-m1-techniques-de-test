@@ -10,6 +10,10 @@ Codecov :
 CircleCI :
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/FlorianAlguazil/ceri-m1-techniques-de-test/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/FlorianAlguazil/ceri-m1-techniques-de-test/tree/master)
 
+Checkstyle :
+![Checkstyle](https://img.shields.io/badge/Checkstyle-Passing-brightgreen)
+
+
 
 
 ## Introduction
