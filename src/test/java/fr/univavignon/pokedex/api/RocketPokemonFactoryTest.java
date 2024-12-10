@@ -51,8 +51,46 @@ public class RocketPokemonFactoryTest {
         Pokemon result = pokemonFactory.createPokemon(0, 613, 64, 4000, 4);
         assertNotNull(result);
 
-        // Vérification que l'IV est dans une plage valide (entre 0% et 100%)
+        // Vérification que l'IV est dans une plage valide (entre 0 et 100)
         double iv = result.getIv();
         assertTrue("L'IV doit être compris entre 0 et 100", iv >= 0.0 && iv <= 100.0);
+    }
+
+    @Test
+    public void testGetPokemonName() {
+        // Test du nom du Pokémon
+        Pokemon result = pokemonFactory.createPokemon(1, 613, 64, 4000, 4);
+        assertNotNull(result);
+        assertEquals("Bulbasaur", result.getName());
+    }
+
+    @Test
+    public void testGetPokemonNameForInvalidIndex() {
+        // Test pour un index inexistant dans la map
+        Pokemon result = pokemonFactory.createPokemon(999, 613, 64, 4000, 4); // Index inexistant
+        assertNotNull(result);
+        assertEquals("MISSINGNO", result.getName());
+    }
+
+    @Test
+    public void testGetPokemonNameForAnotherInvalidIndex() {
+        // Test pour un autre index inexistant
+        Pokemon result = pokemonFactory.createPokemon(9999, 613, 64, 4000, 4); // Index inexistant
+        assertNotNull(result);
+        assertEquals("MISSINGNO", result.getName());
+    }
+
+
+    @Test
+    public void testAshPikachuStats() {
+        // Test pour Ash's Pikachu (index = -1)
+        Pokemon result = pokemonFactory.createPokemon(-1, 613, 64, 4000, 4); // Index -1 pour Ash's Pikachu
+        assertNotNull(result);
+
+        // Vérification des statistiques d'Ash's Pikachu
+        assertEquals("Ash's Pikachu attack should be 1000", 1000, result.getAttack());
+        assertEquals("Ash's Pikachu defense should be 1000", 1000, result.getDefense());
+        assertEquals("Ash's Pikachu stamina should be 1000", 1000, result.getStamina());
+        assertEquals("Ash's Pikachu IV should be 0", 0.0, result.getIv(), 0.01);
     }
 }
