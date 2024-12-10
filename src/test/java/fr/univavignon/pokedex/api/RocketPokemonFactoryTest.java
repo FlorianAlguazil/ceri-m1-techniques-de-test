@@ -80,6 +80,17 @@ public class RocketPokemonFactoryTest {
         assertEquals("MISSINGNO", result.getName());
     }
 
+    @Test
+    public void testAshPikachuStats() {
+        // Test pour Ash's Pikachu (index = -1)
+        Pokemon result = pokemonFactory.createPokemon(-1, 613, 64, 4000, 4); // Index -1 pour Ash's Pikachu
+        assertNotNull(result);
 
+        // Vérification des statistiques d'Ash's Pikachu
+        assertEquals("Ash's Pikachu attack should be 1000", 1000, result.getAttack());
+        assertEquals("Ash's Pikachu defense should be 1000", 1000, result.getDefense());
+        assertEquals("Ash's Pikachu stamina should be 1000", 1000, result.getStamina());
+        assertEquals("Ash's Pikachu IV should be 0", 0.0, result.getIv(), 0.01);
+    }
 
 }
