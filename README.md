@@ -11,10 +11,13 @@ CircleCI :
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/FlorianAlguazil/ceri-m1-techniques-de-test/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/FlorianAlguazil/ceri-m1-techniques-de-test/tree/master)
 
 Checkstyle :
-![Checkstyle](https://img.shields.io/badge/Checkstyle-Passing-brightgreen)
+[![Checkstyle](https://img.shields.io/badge/Checkstyle-Passing-brightgreen)](https://circleci.com/gh/FlorianAlguazil/ceri-m1-techniques-de-test)
 
 
 
+
+## Compre rendu du TP6
+https://github.com/FlorianAlguazil/ceri-m1-techniques-de-test/blob/master/rapport%20tp6%20Alguazil%20Florian.pdf
 
 ## Introduction
 
