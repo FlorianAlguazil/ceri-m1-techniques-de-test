@@ -2,11 +2,14 @@
 
 Florian Alguazil
 
-ALternant 
+Alternant 
 
+Codecov :
 [![codecov](https://codecov.io/github/FlorianAlguazil/ceri-m1-techniques-de-test/graph/badge.svg?token=5J47GUMNTI)](https://codecov.io/github/FlorianAlguazil/ceri-m1-techniques-de-test)
 
+CircleCI :
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/FlorianAlguazil/ceri-m1-techniques-de-test/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/FlorianAlguazil/ceri-m1-techniques-de-test/tree/master)
+
 
 
 ## Introduction

@@ -1,18 +1,39 @@
 version: 2.1
+
 jobs:
   test:
     docker:
       - image: circleci/openjdk:11-jdk
     steps:
+      # Checkout du code
       - checkout
-      - run: mvn clean test
+
+      # Exécution des tests unitaires
       - run:
-          name: Générer le rapport coco
+          name: Exécuter les tests unitaires
+          command: mvn clean test
+
+      # Générer le rapport de couverture de code avec Jacoco
+      - run:
+          name: Générer le rapport de couverture de code avec Jacoco
           command: mvn jacoco:report
+
+      # Télécharger le rapport sur Codecov
       - run:
-          name: Télécharger le rapport sur coco
+          name: Télécharger le rapport sur Codecov
           command: |
             curl -s https://codecov.io/bash | bash -s -- -t ${CODECOV_TOKEN}
+
+      # Vérifier la qualité du code avec Checkstyle
+      - run:
+          name: Vérifier la qualité du code avec Checkstyle
+          command: mvn checkstyle:checkstyle
+
+      # Afficher le rapport Checkstyle dans les logs
+      - run:
+          name: Afficher les résultats Checkstyle
+          command: cat target/checkstyle-result.xml
+
 workflows:
   version: 2
   test:
